@@ -1,0 +1,6 @@
+devel_space: /home/lattinone/catkin_ws/finalproject/devel
+install: false
+install_space: /home/lattinone/catkin_ws/finalproject/install
+profile: default
+source_space: /home/lattinone/catkin_ws/finalproject/src
+workspace: /home/lattinone/catkin_ws/finalproject

@@ -1,0 +1,8 @@
+prefix=/home/lattinone/catkin_ws/finalproject/devel/.private/mrsim
+
+Name: mrsim
+Description: Description of mrsim
+Version: 0.1.0
+Cflags: -I/home/lattinone/catkin_ws/finalproject/src/mrsim/include
+Libs: -L${prefix}/lib 
+Requires: 

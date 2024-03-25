@@ -1,0 +1,1 @@
+/home/lattinone/catkin_ws/finalproject/devel/.private/catkin_tools_prebuild/env.sh
