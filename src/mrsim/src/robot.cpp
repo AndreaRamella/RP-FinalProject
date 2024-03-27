@@ -46,15 +46,15 @@ void Robot::timeTick(float dt) {
 
 void Robot::cmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg) {
   // Update the robot's velocities based on the received cmd_vel message
-  if (msg->linear.x<max_tv){
+  if(msg->linear.x<max_tv){
   tv = msg->linear.x;
-  } else {
+  }else{
     tv = max_tv;
   }
   
-  if (msg->angular.z<max_rv){
+  if(msg->angular.z<max_rv){
   rv = msg->angular.z;
-  } else {
+  }else{
     rv = max_rv;
   }
 }
