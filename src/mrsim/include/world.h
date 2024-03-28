@@ -2,6 +2,8 @@
 #include <cstdint>
 #include <opencv2/opencv.hpp>
 
+#include <string>
+
 #include "simple_geometry.h"
 
 struct WorldItem;
@@ -61,6 +63,8 @@ class WorldItem {
   virtual void timeTick(float dt) = 0;
 
   int id;
+
+  std::string name;
 
   Pose pose;
   WorldItem* parent = 0;

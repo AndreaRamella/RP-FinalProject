@@ -27,6 +27,7 @@ double timeMillisec() {
 // Global variables to hold robot objects and publishers
 vector<Robot*> robots;
 vector<ros::Publisher> odometry_publishers;
+vector<ros::Subscriber> cmd_vel_subscribers;
 
 vector<Lidar*> lidars;
 vector<ros::Publisher> base_scan_publishers;
@@ -54,14 +55,18 @@ int main(int argc, char** argv) {
   // Load robots and lidars from JSON configuration
   const Json::Value items = root["items"];
   for (const auto& item : items) {
-    // const std::string type = item["type"].asString();
+    // const stringstd::string type = item["type"].asString();
     if (item["type"] == "robot") {
-      float radius = item["radius"].asFloat();
+      
       Pose robot_pose;
 
       robot_pose.translation.x = item["pose"][0].asFloat();
       robot_pose.translation.y = item["pose"][1].asFloat();
       robot_pose.theta = (item["pose"][2].asFloat());
+
+      float radius = item["radius"].asFloat();
+
+      string name = item["namespace"].asString();
 
       int parent_id = item["parent"].asInt();
         
@@ -70,16 +75,18 @@ int main(int argc, char** argv) {
         // Robot robot(radius, &w, robot_pose);
         Robot* robot = new Robot(radius, &w, robot_pose);
         robot->id = item["id"].asInt();
-        const Json::Value max_rv_value = item["max_rv"];
-        robot->max_rv = max_rv_value.asFloat();
-        const Json::Value max_tv_value = item["max_tv"];
-        robot->max_tv = max_tv_value.asFloat();
-        const Json::Value tv_value = item["tv"];
-        robot->tv = tv_value.asFloat();
-        const Json::Value rv_value = item["rv"];
-        robot->rv = rv_value.asFloat();
+        robot->name = name;
+        robot->max_rv = item["max_rv"].asFloat();
+        robot->max_tv = item["max_tv"].asFloat();
+        robot->tv = item["tv"].asFloat();
+        robot->rv = item["rv"].asFloat();
 
         robots.push_back(robot);
+
+        string cmd_vel_topic = robot->name + "/cmd_vel";
+        ros::Subscriber cmd_vel_sub = nh.subscribe<geometry_msgs::Twist>(cmd_vel_topic, 10, boost::bind(&Robot::cmdVelCallback, robot, _1));
+
+        cmd_vel_subscribers.push_back(cmd_vel_sub);
 
       } else {
 
@@ -95,16 +102,18 @@ int main(int argc, char** argv) {
 
         Robot* robot = new Robot(radius, p_robot, robot_pose);
         robot->id = item["id"].asInt();
-        const Json::Value max_rv_value = item["max_rv"];
-        robot->max_rv = max_rv_value.asFloat();
-        const Json::Value max_tv_value = item["max_tv"];
-        robot->max_tv = max_tv_value.asFloat();
-        const Json::Value tv_value = item["tv"];
-        robot->tv = tv_value.asFloat();
-        const Json::Value rv_value = item["rv"];
-        robot->rv = rv_value.asFloat();
+        robot->name = name;
+        robot->max_rv = item["max_rv"].asFloat();
+        robot->max_tv = item["max_tv"].asFloat();
+        robot->tv = item["tv"].asFloat();
+        robot->rv = item["rv"].asFloat();
 
         robots.push_back(robot);
+
+        string cmd_vel_topic = robot->name + "/cmd_vel";
+        ros::Subscriber cmd_vel_sub = nh.subscribe<geometry_msgs::Twist>(cmd_vel_topic, 10, boost::bind(&Robot::cmdVelCallback, robot, _1));
+
+        cmd_vel_subscribers.push_back(cmd_vel_sub);
         
         } else {
           std::cerr << "Parent robot with id " << parent_id << " not found!" << std::endl;
@@ -112,7 +121,7 @@ int main(int argc, char** argv) {
       }
 
       // Create odom publisher
-      string topic_name = item["namespace"].asString()+"/odom";
+      string topic_name = name +"/odom";
       odometry_publishers.push_back(nh.advertise<nav_msgs::Odometry>(topic_name, 10));
       
     }
@@ -141,16 +150,13 @@ int main(int argc, char** argv) {
         std::cerr << "Parent robot with id " << parent_id << " not found!" << std::endl;
       }
       // Create base_scan publisher
-      string topic_name = item["namespace"].asString()+"/base_scan";
+      string topic_name = parent_robot->name+"/base_scan";
       base_scan_publishers.push_back(nh.advertise<sensor_msgs::LaserScan>(topic_name, 10));
     }
   }
 
   float delay = 0.1;
   int k=0;
-
-  // ros::Publisher odometry_pub = nh.advertise<nav_msgs::Odometry>("odom", 10);
-  // ros::Subscriber cmd_vel_sub = nh.subscribe("cmd_vel", 10, &Robot::cmdVelCallback, &robot);
 
   while (ros::ok()) {
     double t_start = timeMillisec();
