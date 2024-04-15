@@ -1,12 +1,12 @@
+[  0%] Built target tf2_msgs_generate_messages_nodejs
 [  0%] Built target roscpp_generate_messages_eus
 [  0%] Built target actionlib_msgs_generate_messages_py
-[  0%] Built target tf2_msgs_generate_messages_nodejs
 [  0%] Built target rosgraph_msgs_generate_messages_nodejs
-[  0%] Built target actionlib_generate_messages_cpp
 [  0%] Built target actionlib_generate_messages_py
+[  0%] Built target actionlib_generate_messages_cpp
 [  0%] Built target nav_msgs_generate_messages_eus
-[  0%] Built target actionlib_msgs_generate_messages_eus
 [  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target actionlib_msgs_generate_messages_eus
 [  0%] Built target std_msgs_generate_messages_nodejs
 [  0%] Built target geometry_msgs_generate_messages_eus
 [  0%] Built target roscpp_generate_messages_cpp
@@ -21,23 +21,23 @@
 [  0%] Built target rosgraph_msgs_generate_messages_py
 [  0%] Built target geometry_msgs_generate_messages_cpp
 [  0%] Built target tf2_msgs_generate_messages_py
-[  0%] Built target std_msgs_generate_messages_cpp
 [  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_cpp
 [  0%] Built target rosgraph_msgs_generate_messages_lisp
 [  0%] Built target tf_generate_messages_eus
 [  0%] Built target tf2_msgs_generate_messages_cpp
 [  0%] Built target roscpp_generate_messages_nodejs
-[  0%] Built target geometry_msgs_generate_messages_lisp
-[  0%] Built target actionlib_msgs_generate_messages_cpp
 [  0%] Built target tf_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_lisp
 [  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target actionlib_msgs_generate_messages_cpp
 [  0%] Built target roscpp_generate_messages_py
-[  0%] Built target actionlib_msgs_generate_messages_lisp
 [  0%] Built target actionlib_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_lisp
 [  0%] Built target std_msgs_generate_messages_eus
 [  0%] Built target tf_generate_messages_py
-[  0%] Built target actionlib_generate_messages_eus
 [  0%] Built target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target actionlib_generate_messages_eus
 [  0%] Built target nav_msgs_generate_messages_nodejs
 [  0%] Built target sensor_msgs_generate_messages_cpp
 [  0%] Built target sensor_msgs_generate_messages_eus
@@ -50,5 +50,12 @@
 [  0%] Built target tf2_msgs_generate_messages_lisp
 [35m[1mScanning dependencies of target mrsim_node[0m
 [ 16%] [32mBuilding CXX object CMakeFiles/mrsim_node.dir/src/robot.cpp.o[0m
-[ 33%] [32m[1mLinking CXX executable /home/lattinone/catkin_ws/finalproject/devel/.private/mrsim/lib/mrsim/mrsim_node[0m
-[100%] Built target mrsim_node
+[ 33%] [32mBuilding CXX object CMakeFiles/mrsim_node.dir/src/main.cpp.o[0m
+[01m[K/home/lattinone/catkin_ws/finalproject/src/mrsim/src/robot.cpp:[m[K In member function ‘[01m[Knav_msgs::Odometry Robot::getOdometryMessage()[m[K’:
+[01m[K/home/lattinone/catkin_ws/finalproject/src/mrsim/src/robot.cpp:70:36:[m[K [01;31m[Kerror: [m[K‘[01m[Ktf[m[K’ has not been declared
+   70 |   odom_msg.pose.pose.orientation = [01;31m[Ktf[m[K::createQuaternionMsgFromYaw(poseInWorld().theta);
+      |                                    [01;31m[K^~[m[K
+make[2]: *** [CMakeFiles/mrsim_node.dir/build.make:115: CMakeFiles/mrsim_node.dir/src/robot.cpp.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [CMakeFiles/Makefile2:536: CMakeFiles/mrsim_node.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

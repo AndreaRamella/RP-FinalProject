@@ -36,7 +36,7 @@ class Robot : public RobotBase {
 
  private:
   ros::NodeHandle nh;
-  ros::Publisher odometry_pub;
-  ros::Subscriber cmd_vel_sub;
-  geometry_msgs::Twist current_vel;
+  // ros::Publisher odometry_pub;
+  // ros::Subscriber cmd_vel_sub;
+  // geometry_msgs::Twist current_vel;
 };

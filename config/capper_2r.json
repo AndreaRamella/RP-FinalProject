@@ -6,7 +6,7 @@
             "type": "robot",
             "frame_id": "frame_robot0",
             "namespace": "robot_0",
-            "radius": 3,
+            "radius": 0.3,
             "max_rv": 0.1,
             "max_tv": 0.5,
             "pose": [
@@ -21,7 +21,7 @@
             "type": "lidar",
             "frame_id": "frame_lidar0",
             "namespace": "lidar_0",
-            "fov": 6.18,
+            "fov": 6.28,
             "max_range": 10.0,
             "num_beams": 360,
             "pose": [

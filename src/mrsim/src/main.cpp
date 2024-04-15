@@ -9,6 +9,9 @@
 #include "geometry_msgs/Twist.h"
 #include "sensor_msgs/LaserScan.h"
 
+#include "tf2_ros/transform_broadcaster.h"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.h"
+
 #include "lidar.h"
 #include "robot.h"
 #include "simple_geometry.h"
@@ -46,6 +49,8 @@ int main(int argc, char** argv) {
 
   ros::init(argc, argv, "my_simulator_node");
   ros::NodeHandle nh;
+
+
 
   // Load world map from the JSON configuration
   string map_filename = root["map"].asString();
@@ -157,6 +162,7 @@ int main(int argc, char** argv) {
 
   float delay = 0.1;
   int k=0;
+  tf2_ros::TransformBroadcaster tf_broadcaster;
 
   while (ros::ok()) {
     double t_start = timeMillisec();
@@ -170,6 +176,11 @@ int main(int argc, char** argv) {
         for (size_t i = 0; i < robots.size(); ++i) {
             nav_msgs::Odometry odom_msg;
             odom_msg = robots[i]->getOdometryMessage();
+            if(robots[i]->parent==0){
+              odom_msg.header.frame_id = map_filename;
+            }else{
+              odom_msg.header.frame_id = robots[i]->parent->name;
+            }
             odometry_publishers[i].publish(odom_msg);
         }
     

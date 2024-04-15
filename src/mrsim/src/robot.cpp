@@ -5,7 +5,6 @@
 #include <opencv2/imgproc.hpp>
 
 using namespace std;
-// using namespace tf;
 
 RobotBase::RobotBase(float radius_, World* w, const Pose& pose_)
     : WorldItem(w, pose_) {
@@ -46,14 +45,14 @@ void Robot::timeTick(float dt) {
 
 void Robot::cmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg) {
   // Update the robot's velocities based on the received cmd_vel message
-  if(msg->linear.x<max_tv){
+  if(msg->linear.x < max_tv){
   tv = msg->linear.x;
   cerr << "Maximum linear velocity exceeded, set to speed limit" << endl;
   }else{
     tv = max_tv;
   }
   
-  if(msg->angular.z<max_rv){
+  if(msg->angular.z < max_rv){
   rv = msg->angular.z;
   cerr << "Maximum angular velocity exceeded, set to speed limit" << endl;
   }else{
@@ -62,11 +61,11 @@ void Robot::cmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg) {
 }
 
 nav_msgs::Odometry Robot::getOdometryMessage() {
-  // Create and return an Odometry message with the robot's current pose
+  // Create and return an Odometry message with the robot's current pose and velocities
   nav_msgs::Odometry odom_msg;
   odom_msg.header.stamp = ros::Time::now();
-  odom_msg.header.frame_id = "robot_" + std::to_string(id) + "/odom";
-  odom_msg.child_frame_id = "base_link";
+   
+  odom_msg.child_frame_id = "robot_" + std::to_string(id) + "/odom";
   odom_msg.pose.pose.position.x = poseInWorld().translation.x;
   odom_msg.pose.pose.position.y = poseInWorld().translation.y;
   odom_msg.pose.pose.orientation = tf::createQuaternionMsgFromYaw(poseInWorld().theta);
